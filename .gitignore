@@ -1,2 +1,5 @@
-bin/*
-obj/*
+GithubAccountManager/bin/*
+GithubAccountManager/obj/*
+
+Account/bin/*
+Account/obj/*
