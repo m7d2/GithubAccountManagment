@@ -1,5 +1,6 @@
 GithubAccountManager/bin/*
 GithubAccountManager/obj/*
+GithubAccountManager/.vs
 
 Account/bin/*
 Account/obj/*
