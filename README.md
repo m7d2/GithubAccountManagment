@@ -1,4 +1,4 @@
-# GithubAccountManagment v1.8.0
+# Github Account Manager v1.8.0
  A tool i created to solve my problem when dealing with two github account on the same machine.
 
 ### Features:
