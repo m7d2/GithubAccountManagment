@@ -7,6 +7,7 @@
 
 using Info;
 using System.Diagnostics;
+using System;
 using System.IO;
 
 namespace GithubAccountManager
@@ -123,31 +124,7 @@ namespace GithubAccountManager
             // Start the git clone process
             process.Start();
             process.WaitForExit();
-
-
-            // Set the username and email for the local repository
-            ProcessStartInfo setUserEmail = new ProcessStartInfo
-            {
-                FileName = "git",
-                Arguments = $"config user.email \"{acc.Email}\"",
-                RedirectStandardOutput = true,
-                UseShellExecute = false,
-                CreateNoWindow = true,
-                WorkingDirectory = targetDirectory
-            };
-            ProcessStartInfo setUserName = new ProcessStartInfo
-            {
-                FileName = "git",
-                Arguments = $"config user.name \"{acc.UserName}\"",
-                RedirectStandardOutput = true,
-                UseShellExecute = false,
-                CreateNoWindow = true,
-                WorkingDirectory = targetDirectory
-            };
-
-            // Execute the commands to set the username and email
-            Process.Start(setUserEmail).WaitForExit();
-            Process.Start(setUserName).WaitForExit();
+            ExecuteCommands(acc, targetDirectory);
         }
 
         // Start an instace if user already signed in
@@ -187,31 +164,8 @@ namespace GithubAccountManager
             // Start the git clone process
             process.Start();
             process.WaitForExit();
+            ExecuteCommands(acc, targetDirectory);
 
-
-            // Set the username and email for the local repository
-            ProcessStartInfo setUserEmail = new ProcessStartInfo
-            {
-                FileName = "git",
-                Arguments = $"config user.email \"{acc.Email}\"",
-                RedirectStandardOutput = true,
-                UseShellExecute = false,
-                CreateNoWindow = true,
-                WorkingDirectory = targetDirectory
-            };
-            ProcessStartInfo setUserName = new ProcessStartInfo
-            {
-                FileName = "git",
-                Arguments = $"config user.name \"{acc.UserName}\"",
-                RedirectStandardOutput = true,
-                UseShellExecute = false,
-                CreateNoWindow = true,
-                WorkingDirectory = targetDirectory
-            };
-
-            // Execute the commands to set the username and email
-            Process.Start(setUserEmail).WaitForExit();
-            Process.Start(setUserName).WaitForExit();
             Console.WriteLine($"Github Account Manager | {CopyRight()} ");
         }
 
@@ -278,6 +232,57 @@ namespace GithubAccountManager
         static string CopyRight()
         {
             return $"© Mohammad Rashed {DateTime.Now.Year}";
+        }
+        // Execute Git Commands and open Dev Environment
+        static void ExecuteCommands(Account acc, string targetDirectory)
+        {
+            // Set the username and email for the local repository
+            ProcessStartInfo setUserEmail = new ProcessStartInfo
+            {
+                FileName = "git",
+                Arguments = $"config user.email \"{acc.Email}\"",
+                RedirectStandardOutput = true,
+                UseShellExecute = false,
+                CreateNoWindow = true,
+                WorkingDirectory = targetDirectory
+            };
+            ProcessStartInfo setUserName = new ProcessStartInfo
+            {
+                FileName = "git",
+                Arguments = $"config user.name \"{acc.UserName}\"",
+                RedirectStandardOutput = true,
+                UseShellExecute = false,
+                CreateNoWindow = true,
+                WorkingDirectory = targetDirectory
+            };
+            // Open Git console in Repo Directory
+            ProcessStartInfo openGit = new ProcessStartInfo
+            {
+                FileName = @"cmd.exe",
+                //FileName = @"C:\Program Files\Git\bin\bash.exe",
+                Arguments = $"/c start \"\" \"C:\\Program Files\\Git\\git-bash.exe\" --cd=\"{targetDirectory}\"",
+                RedirectStandardOutput = true,
+                UseShellExecute = false,
+                CreateNoWindow = false
+            };
+
+            // Open Development environment in Repo Directory
+            ProcessStartInfo openDevEnv = new ProcessStartInfo
+            {
+                FileName = @$"C:\Users\{Environment.UserName}\AppData\Local\Programs\Microsoft VS Code\bin\code.cmd",
+                //FileName = @"C:\Program Files\Git\bin\bash.exe",
+                Arguments = $".",
+                RedirectStandardOutput = false,
+                UseShellExecute = false,
+                CreateNoWindow = false,
+                WorkingDirectory = targetDirectory
+            };
+
+            // Execute the commands to set the username and email
+            Process.Start(setUserEmail)!.WaitForExit();
+            Process.Start(setUserName)!.WaitForExit();
+            Process.Start(openGit);
+            Process.Start(openDevEnv);
         }
         #endregion
 
