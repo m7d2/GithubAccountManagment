@@ -6,7 +6,12 @@
     <RootNamespace>Github_Account_Manager</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <ApplicationIcon>GithubAccountManager.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="GithubAccountManager.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Account\Info.csproj" />
